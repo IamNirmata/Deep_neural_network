@@ -1,0 +1,2 @@
+# Deep_neural_network
+DNN_Back_propagation_incomplete
