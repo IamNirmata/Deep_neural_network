@@ -92,6 +92,7 @@ class NN():
 
     def calc_output(self,a,wp):
         print("output layer is [",end="")
+        zp=0
         for i in range(0,len(wp)):
 
             self.zp+=self.wp[i]*self.a[i]
@@ -101,6 +102,11 @@ class NN():
         print(self.y,"]")
 
         return self.zp,self.y
+
+
+
+
+
 
 
     #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -127,8 +133,8 @@ class NN():
                 self.delta=(-1)*self.hidden_errors[j]*self.z[j]*(1-z[j])*x[i]
                 self.w[i][j]+=self.lmda*self.delta
         
-        print("Delta=",self.delta)
-        return self.w
+        
+        return self.w,self.delta
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -147,11 +153,11 @@ def eqation_circle(list_x):
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@        
 
-def train(w,wp,lmda,outputs,inputs,hidden,examples):
+def train(w,wp,lmda,outputs,inputs,hidden,epoch):
 
     
     ############################################
-    for i in range(0,len(examples)):
+    for i in range(0,len(epoch)):
         
 
         x=NN.rand_input(ni)
@@ -161,11 +167,41 @@ def train(w,wp,lmda,outputs,inputs,hidden,examples):
         
         print("the ouput is :",t)
 
-        target=eqation_circle(x)
+        t=eqation_circle(x)
+
+        output_error=t-y
+
+        print("o_error :",output_error)
 
 
+        wp=NN.update_H2O(wp,t,y,z,lmda)
+        w,delta=NN.update_I2H(output_error,wp,w,x,z,lmda)
+
+def testing(w,wp,lmda,outputs,inputs,hidden,epoch):
+
+    
+    ############################################
+    for i in range(0,len(epoch)):
+        
+
+        x=NN.rand_input(ni)
+        z,a=NN.calc_hidout(x,w)
+  
+        zp,y=NN.calc_output(a,wp)
+        
+        print("the ouput is :",t)
+
+        t=eqation_circle(x)
+
+        output_error=t-y
+
+        print("o_error :",output_error)
 
 
+        wp=NN.update_H2O(wp,t,y,z,lmda)
+        w,delta=NN.update_I2H(output_error,wp,w,x,z,lmda)
+
+    print("training is done!!!!!")
 
 
 
@@ -181,125 +217,12 @@ if __name__==__main__:
 
     ni=input(int("how many neurons in input:",end=""))
     nh=input(int("how many neurons in hidden layer:",end=""))
+    lmda=input(int("learning rate:",end=""))
+    epoch=input(int("No of training iterations:",end=""))
+
 
     w,wp=NN.init(ni,nh)
 
     train(w,wp)
     test()
 
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-        
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-print("how many layers you want in the network:")
-L=int(input())
-
-
-print(L)
-n=list()
-for i in range(0,L):
-    
-    n[i]=int(input("number of neurons needed in hidden layer:"))
-
-
-
-
-
-
-m=int(input("enter X matrix number of rows :"))
-n=int(input("enter X matrix number of columns :"))
-x=[]
-for i in range(0,m):
-    for j in range(0,n):
-        x[i][j]=input("give values for X"+"["+i+"]"+"["+j+"]")
-        
-        
-class NN():
-    def multip():
-        for i in range(len(X)):  
-            for j in range(len(Y[0])):  
-                for k in range(len(Y)):
-                    result[i][j] += X[i][k] * Y[k][j]
-
-
-for r in result:
-    print(r) 
-        
-
-class NeuralNetwork:
-    
-     
-    def __init__(self, x, y):
-        self.input      = 
-        self.weights1   = np.random.rand(self.input.shape[1],4) 
-        self.weights2   = np.random.rand(4,1)                 
-        self.y          = y
-        self.output     = np.zeros(self.y.shape)
-
-    def feedforward(self):
-        self.layer1 = sigmoid(np.dot(self.input, self.weights1))
-        self.output = sigmoid(np.dot(self.layer1, self.weights2))
-
-    def backprop(self):
-        # application of the chain rule to find derivative of the loss function with respect to weights2 and weights1
-        d_weights2 = np.dot(self.layer1.T, (2*(self.y - self.output) * sigmoid_derivative(self.output)))
-        d_weights1 = np.dot(self.input.T,  (np.dot(2*(self.y - self.output) * sigmoid_derivative(self.output), self.weights2.T) * sigmoid_derivative(self.layer1)))
-
-        # update the weights with the derivative (slope) of the loss function
-        self.weights1 += d_weights1
-        self.weights2 += d_weights2
