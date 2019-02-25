@@ -85,5 +85,6 @@ class neural_network():
     def train(w,wp,lmda,outputs,inputs,hidden,examples):
         for i in range(0,len(examples)):
             x[0]=1
+            
             x[1]=random.uniform(-50,50)
             x[2]=random.uniform(-50,50)
