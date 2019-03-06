@@ -41,6 +41,7 @@ class bpnn(object):
         return w,wp
         #returning the weights
 
+        
     #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     
     #function for feeding random input values to the model
