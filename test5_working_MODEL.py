@@ -332,7 +332,7 @@ if __name__=='__main__':
     
     epochT=1000
     percT,countT,inarowT,m_rowT=testing(w,wp,epochT)
-    print("+++++++++++++++++TEST_RESULTS++++++++++++++++++++++++++++++++")
+    print("++++++++++++++++TEST_RESULTS++++++++++++++++++++++++++++++++")
     print("Number of examples:",epochT,end=" ")
     print("successful predictions:",countT)
     print("in a row:",inarowT,end=" ")
